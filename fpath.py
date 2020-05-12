@@ -19,9 +19,9 @@ class fpath: # parse a relative path
   
   def __init__(self, path): self.path=path
 
-  def full(self): return os.path.abspath(os.path.expanduser(self.Path))
+  def full(self): return os.path.abspath(os.path.expanduser(self.path))
 
-  def directory(self):
+  def pdir(self):
     f=self.full()
     return os.path.dirname(f)
 
@@ -44,16 +44,22 @@ class fpath: # parse a relative path
  
   def is_file(self):
     f=self.full()
-    return os.path.is_file(f)
+    return os.path.isfile(f)
 
   def is_dir(self):
     f=self.full()
-    return os.path.is_dir(f)
+    return os.path.isdir(f)
 
   def glob(self):
     f=self.full()
     return glob.glob(f, recursive=True)
 
   def walk(self):
+    r=[]
     f=self.full()
-    return os.walk(f)
+    for root, dirs, files in os.walk(f):
+      for name in files:
+          r.append(os.path.join(root, name))
+      for name in dirs:
+          r.append(os.path.join(root, name))
+    return r
