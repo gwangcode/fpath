@@ -1,7 +1,7 @@
 # fpath
 a convenient lib for path &amp; file name operations
 
-usage:
+#usage:
 # import fpath
 import fpath 
 
